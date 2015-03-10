@@ -109,6 +109,10 @@ Ethasher::Result Ethasher::eval(BlockInfo const& _header, Nonce const& _nonce)
 {
 	auto p = Ethasher::params(_header);
 	ethash_return_value r;
+  cout << "\nHURR: " << toHex(toString(Ethasher::get()->cache(_header).data()));
+  cout << "\nHURR: " << &p;
+  cout << "\nHURR: " << toHex(toString(_header.headerHash(WithoutNonce).data()));
+  cout << "\nHURR: " << (uint64_t)(u64)_nonce;
 	ethash_compute_light(&r, Ethasher::get()->cache(_header).data(), &p, _header.headerHash(WithoutNonce).data(), (uint64_t)(u64)_nonce);
 	return Result{h256(r.result, h256::ConstructFromPointer), h256(r.mix_hash, h256::ConstructFromPointer)};
 }
