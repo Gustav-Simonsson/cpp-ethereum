@@ -129,6 +129,8 @@ void BlockInfo::populateFromHeader(RLP const& _header, Strictness _s)
 		throw;
 	}
 
+  //cnote << "HURR 1" << toString(_s);
+  //cnote << "HURR 2" << toString(parentHash);
 	// check it hashes according to proof of work or that it's the genesis block.
 	if (_s == CheckEverything && parentHash && !ProofOfWork::verify(*this))
 		BOOST_THROW_EXCEPTION(InvalidBlockNonce() << errinfo_hash256(headerHash(WithoutNonce)) << errinfo_nonce(nonce) << errinfo_difficulty(difficulty));
