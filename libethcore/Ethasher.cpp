@@ -116,6 +116,9 @@ bool Ethasher::verify(BlockInfo const& _header)
 	auto r = eval(_header);
 	return r.mixHash == _header.mixHash && r.value <= boundary;
 
+  cnote << "HURR " << toString(_header.headerHash(WithoutNonce).data());
+  cnote << "HURR " << toString((uint64_t)(u64)_header.nonce);
+  cnote << "HURR " << toString(_header.mixHash.data());
 	return ethash_quick_check_difficulty(
 		_header.headerHash(WithoutNonce).data(),
 		(uint64_t)(u64)_header.nonce,
