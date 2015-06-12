@@ -260,6 +260,7 @@ bool ethash_cl_miner::init(
 	unsigned _deviceId
 )
 {
+  cout << "ds: " << _dagSize << endl;
 	// get all platforms
 	try
 	{
@@ -420,6 +421,8 @@ bool ethash_cl_miner::init(
 
 void ethash_cl_miner::search(uint8_t const* header, uint64_t target, search_hook& hook)
 {
+  //cout << "header: " << _dagSize << endl;
+  cout << "target: " << target << endl;
 	try
 	{
 		struct pending_batch

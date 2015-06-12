@@ -93,6 +93,7 @@ bool Ethash::preVerify(BlockInfo const& _header)
 		return false;
 
 	h256 boundary = u256((bigint(1) << 256) / _header.difficulty);
+  cout << "boundary: " << boundary << endl;
 
 	bool ret = !!ethash_quick_check_difficulty(
 			(ethash_h256_t const*)_header.headerHash(WithoutNonce).data(),
@@ -350,6 +351,7 @@ void Ethash::GPUMiner::workLoop()
 		}
 
 		uint64_t upper64OfBoundary = (uint64_t)(u64)((u256)w.boundary >> 192);
+    cout << "upper64ofboundary: " << upper64OfBoundary << endl;
 		m_miner->search(w.headerHash.data(), upper64OfBoundary, *m_hook);
 	}
 	catch (cl::Error const& _e)
