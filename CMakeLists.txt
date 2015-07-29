@@ -407,6 +407,8 @@ if (SOLIDITY)
 	add_subdirectory(libsolidity)
 endif ()
 
+add_subdirectory(keydebug)
+
 if (TOOLS)
 	add_subdirectory(lllc)
 	if (SOLIDITY)
