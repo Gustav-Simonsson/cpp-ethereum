@@ -14,8 +14,8 @@ void search(long start) {
     std::mt19937_64 mt_rng(unixtime);
     dev::KeyPair key(FixedHash<32>::random(mt_rng));
 
-    cout << endl << "{\"address\": " << key.address() << ",";
-    cout << "\"privkey\": " << key.secret() << "},";
+    //cout << endl << "{\"address\": " << key.address() << ",";
+    //cout << "\"privkey\": " << key.secret() << "},";
 
     if (count % 1000 == 0) {
       fprintf(stderr, "count=%ld unixtime=%ld\r", count, unixtime);
