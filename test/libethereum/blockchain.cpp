@@ -185,6 +185,7 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
 					catch(...)
 					{
 						cnote << "error in importing uncle! This produces an invalid block (May be by purpose for testing).";
+						cout << "error in importing uncle! This produces an invalid block (May be by purpose for testing).";
 					}
 				}
 
@@ -236,8 +237,13 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
 
 				if (vBiUncles.size())
 				{
+          cout << "hurr!";
 					// update unclehash in case of invalid uncles
 					current_BlockHeader.setSha3Uncles(sha3(uncleStream.out()));
+          current_BlockHeader.setRoots(current_BlockHeader.transactionsRoot(),
+                                       current_BlockHeader.receiptsRoot(),
+                                       current_BlockHeader.sha3Uncles(),
+                                       h256(fromHex("e9940294a09308406a3d2e09203aed11db40259fac0a25e639ad2b30b82d07de")));
 					updatePoW(current_BlockHeader);
 				}
 
@@ -301,9 +307,10 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
 						blockSets.push_back(newBlock);
 				}
 				// if exception is thrown, RLP is invalid and no blockHeader, Transaction list, or Uncle list should be given
-				catch (...)
+				catch (Exception const& _e)
 				{
 					cnote << "block is invalid!\n";
+          cout << "block is invalid!\n" <<diagnostic_information(_e);
 					blObj.erase(blObj.find("blockHeader"));
 					blObj.erase(blObj.find("uncleHeaders"));
 					blObj.erase(blObj.find("transactions"));
@@ -349,6 +356,7 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
 				catch (Exception const& _e)
 				{
 					cnote << "state sync or block import did throw an exception: " << diagnostic_information(_e);
+          cout << "state sync or block import did throw an exception: " << diagnostic_information(_e);
 					TBOOST_CHECK((blObj.count("blockHeader") == 0));
 					TBOOST_CHECK((blObj.count("transactions") == 0));
 					TBOOST_CHECK((blObj.count("uncleHeaders") == 0));
@@ -562,6 +570,8 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 
 		// make uncle header valid
 		uncleBlockFromFields.setTimestamp((u256)time(0));
+    //cout "time now: " << (u256)time(0);
+    //uncleBlockFromFields.setTimestamp(u256(2440164699));
 		if (_vBiBlocks.size() > 2)
 		{
 			if (uncleBlockFromFields.number() - 1 < _vBiBlocks.size())
@@ -572,6 +582,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 		else
 			continue;
 
+    overwrite = "timestamp";
 		if (overwrite != "false")
 		{
 			uncleBlockFromFields = constructHeader(
@@ -582,7 +593,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 				uncleBlockFromFields.transactionsRoot(),
 				uncleBlockFromFields.receiptsRoot(),
 				uncleBlockFromFields.logBloom(),
-				overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
+				131072,//overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
 				uncleBlockFromFields.number(),
 				overwrite == "gasLimit" ? toInt(uncleHeaderObj["gasLimit"]) : uncleBlockFromFields.gasLimit(),
 				overwrite == "gasUsed" ? toInt(uncleHeaderObj["gasUsed"]) : uncleBlockFromFields.gasUsed(),
@@ -593,6 +604,14 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 				uncleBlockFromFields.populateFromParent(_vBiBlocks[_vBiBlocks.size() - 1]);
 		}
 
+    //uncleBlockFromFields.setTimestamp(9999999999);
+    //uncleBlockFromFields.setDifficulty(131072);
+    /*
+    uncleBlockFromFields.setRoots(uncleBlockFromFields.transactionsRoot(),
+                                  uncleBlockFromFields.receiptsRoot(),
+                                  uncleBlockFromFields.sha3Uncles(),
+                                  h256(fromHex("e9940294a09308406a3d2e09203aed11db40259fac0a25e639ad2b30b82d07de")));
+    */
 		updatePoW(uncleBlockFromFields);
 
 		if (overwrite == "nonce")
