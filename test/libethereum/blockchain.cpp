@@ -240,10 +240,12 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
           cout << "hurr!";
 					// update unclehash in case of invalid uncles
 					current_BlockHeader.setSha3Uncles(sha3(uncleStream.out()));
+          /*
           current_BlockHeader.setRoots(current_BlockHeader.transactionsRoot(),
                                        current_BlockHeader.receiptsRoot(),
                                        current_BlockHeader.sha3Uncles(),
                                        h256(fromHex("e9940294a09308406a3d2e09203aed11db40259fac0a25e639ad2b30b82d07de")));
+          */
 					updatePoW(current_BlockHeader);
 				}
 
@@ -582,7 +584,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 		else
 			continue;
 
-    overwrite = "timestamp";
+    overwrite = "hurr";
 		if (overwrite != "false")
 		{
 			uncleBlockFromFields = constructHeader(
@@ -593,7 +595,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 				uncleBlockFromFields.transactionsRoot(),
 				uncleBlockFromFields.receiptsRoot(),
 				uncleBlockFromFields.logBloom(),
-				131072,//overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
+				1337,//overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
 				uncleBlockFromFields.number(),
 				overwrite == "gasLimit" ? toInt(uncleHeaderObj["gasLimit"]) : uncleBlockFromFields.gasLimit(),
 				overwrite == "gasUsed" ? toInt(uncleHeaderObj["gasUsed"]) : uncleBlockFromFields.gasUsed(),

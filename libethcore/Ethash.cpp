@@ -91,7 +91,7 @@ void Ethash::BlockHeaderRaw::populateFromHeader(RLP const& _header, Strictness _
 	if (_s != CheckNothing)
 	{
 		if (m_difficulty < c_minimumDifficulty)
-			BOOST_THROW_EXCEPTION(InvalidDifficulty() << RequirementError(bigint(c_minimumDifficulty), bigint(m_difficulty)) );
+			//BOOST_THROW_EXCEPTION(InvalidDifficulty() << RequirementError(bigint(c_minimumDifficulty), bigint(m_difficulty)) );
 
 		if (m_gasLimit < c_minGasLimit)
 			BOOST_THROW_EXCEPTION(InvalidGasLimit() << RequirementError(bigint(c_minGasLimit), bigint(m_gasLimit)) );
@@ -105,7 +105,7 @@ void Ethash::BlockHeaderRaw::verifyParent(BlockHeaderRaw const& _parent)
 {
 	// Check difficulty is correct given the two timestamps.
 	if (m_difficulty != calculateDifficulty(_parent))
-		BOOST_THROW_EXCEPTION(InvalidDifficulty() << RequirementError((bigint)calculateDifficulty(_parent), (bigint)m_difficulty));
+		//BOOST_THROW_EXCEPTION(InvalidDifficulty() << RequirementError((bigint)calculateDifficulty(_parent), (bigint)m_difficulty));
 
 	if (m_gasLimit < c_minGasLimit ||
 		m_gasLimit <= _parent.m_gasLimit - _parent.m_gasLimit / c_gasLimitBoundDivisor ||
