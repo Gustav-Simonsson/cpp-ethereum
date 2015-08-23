@@ -505,7 +505,7 @@ u256 Block::enact(VerifiedBlockRef const& _block, BlockChain const& _bc)
 					ex << errinfo_comment("Uncle in block already mentioned");
 					ex << errinfo_unclesExcluded(excluded);
 					ex << errinfo_hash256(sha3(i.data()));
-					BOOST_THROW_EXCEPTION(ex);
+					//BOOST_THROW_EXCEPTION(ex);
 				}
 				excluded.insert(h);
 

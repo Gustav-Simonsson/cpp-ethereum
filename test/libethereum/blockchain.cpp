@@ -240,12 +240,12 @@ void doBlockchainTests(json_spirit::mValue& _v, bool _fillin)
           cout << "hurr!";
 					// update unclehash in case of invalid uncles
 					current_BlockHeader.setSha3Uncles(sha3(uncleStream.out()));
-          /*
+          ///*
           current_BlockHeader.setRoots(current_BlockHeader.transactionsRoot(),
                                        current_BlockHeader.receiptsRoot(),
                                        current_BlockHeader.sha3Uncles(),
-                                       h256(fromHex("e9940294a09308406a3d2e09203aed11db40259fac0a25e639ad2b30b82d07de")));
-          */
+                                       h256(fromHex("ebfa256cb9f13259f5675da0ef5cecc57d8d07278e4b74af40af8cb4b173e71a")));
+          //*/
 					updatePoW(current_BlockHeader);
 				}
 
@@ -595,7 +595,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 				uncleBlockFromFields.transactionsRoot(),
 				uncleBlockFromFields.receiptsRoot(),
 				uncleBlockFromFields.logBloom(),
-				1337,//overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
+				131072,//overwrite == "difficulty" ? toInt(uncleHeaderObj["difficulty"]) : overwrite == "timestamp" ? uncleBlockFromFields.calculateDifficulty(_vBiBlocks[(size_t)uncleBlockFromFields.number() - 1]) : uncleBlockFromFields.difficulty(),
 				uncleBlockFromFields.number(),
 				overwrite == "gasLimit" ? toInt(uncleHeaderObj["gasLimit"]) : uncleBlockFromFields.gasLimit(),
 				overwrite == "gasUsed" ? toInt(uncleHeaderObj["gasUsed"]) : uncleBlockFromFields.gasUsed(),
@@ -607,7 +607,7 @@ mArray importUncles(mObject const& _blObj, vector<BlockHeader>& _vBiUncles, vect
 		}
 
     //uncleBlockFromFields.setTimestamp(9999999999);
-    //uncleBlockFromFields.setDifficulty(131072);
+    uncleBlockFromFields.setDifficulty(133072);
     /*
     uncleBlockFromFields.setRoots(uncleBlockFromFields.transactionsRoot(),
                                   uncleBlockFromFields.receiptsRoot(),

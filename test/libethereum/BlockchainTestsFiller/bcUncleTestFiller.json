@@ -82,7 +82,7 @@
                         "coinbase" : "bcde5374fce5edbc8e2a8697c15331677e6ebf0b",
                         "difficulty" : "131136",
                         "extraData" : "0x",
-                        "gasLimit" : "3341592",
+                        "gasLimit" : "3341591",
                         "gasUsed" : "0",
                         "hash" : "9de9879b6a81d1b6c4993c63c90a3c9d1e775f14572694778e828bc64972ae04",
                         "mixHash" : "b557f905d29ed0fca99d65d0adcce698dee97cf72a13c7cd8d7a7826b8eee770",
